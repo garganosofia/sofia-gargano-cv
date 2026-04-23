@@ -1,0 +1,14 @@
+{
+  "name": "Dra. Sofía Gárgano",
+  "short_name": "Gárgano",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#06111c",
+  "background_color": "#06111c",
+  "display": "standalone"
+}
