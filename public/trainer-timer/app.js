@@ -760,23 +760,95 @@
   els.startBtn.addEventListener("click", start);
   els.resetBtn.addEventListener("click", reset);
 
-  document.querySelectorAll(".step").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const targetId = btn.dataset.target;
-      const step = parseInt(btn.dataset.step, 10) || 1;
-      const input = document.getElementById(targetId);
-      if (!input) return;
-      const min = parseInt(input.min, 10);
-      const max = parseInt(input.max, 10);
-      const current = parseInt(input.value, 10) || 0;
-      let next = current + step;
-      if (!Number.isNaN(min)) next = Math.max(min, next);
-      if (!Number.isNaN(max)) next = Math.min(max, next);
-      input.value = next;
-      updateRoundLabel();
-      persistConfig();
+  function applyStep(targetId, step) {
+    const input = document.getElementById(targetId);
+    if (!input) return false;
+    const min = parseInt(input.min, 10);
+    const max = parseInt(input.max, 10);
+    const current = parseInt(input.value, 10) || 0;
+    let next = current + step;
+    if (!Number.isNaN(min)) next = Math.max(min, next);
+    if (!Number.isNaN(max)) next = Math.min(max, next);
+    if (next === current) return false;
+    input.value = next;
+    updateRoundLabel();
+    persistConfig();
+    return true;
+  }
+
+  function bindStepperButton(btn) {
+    const targetId = btn.dataset.target;
+    const step = parseInt(btn.dataset.step, 10) || 1;
+    let holdTimeoutId = null;
+    let holdIntervalId = null;
+    let holdTickMs = 220;
+    let didHold = false;
+
+    const tick = () => {
+      const changed = applyStep(targetId, step);
+      if (changed && navigator.vibrate && els.vibrateOn.checked) navigator.vibrate(10);
+      if (!changed) stopHold();
+    };
+
+    const accelerate = () => {
+      if (holdTickMs > 70) {
+        clearInterval(holdIntervalId);
+        holdTickMs = Math.max(70, holdTickMs - 30);
+        holdIntervalId = setInterval(() => {
+          tick();
+          accelerate();
+        }, holdTickMs);
+      }
+    };
+
+    const startHold = (e) => {
+      if (e.button !== undefined && e.button !== 0) return;
+      didHold = false;
+      btn.dataset.pressed = "true";
+      holdTimeoutId = setTimeout(() => {
+        didHold = true;
+        tick();
+        holdIntervalId = setInterval(() => {
+          tick();
+          accelerate();
+        }, holdTickMs);
+      }, 380);
+    };
+
+    const stopHold = () => {
+      btn.removeAttribute("data-pressed");
+      if (holdTimeoutId) { clearTimeout(holdTimeoutId); holdTimeoutId = null; }
+      if (holdIntervalId) { clearInterval(holdIntervalId); holdIntervalId = null; }
+      holdTickMs = 220;
+    };
+
+    btn.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      btn.setPointerCapture?.(e.pointerId);
+      startHold(e);
     });
-  });
+    btn.addEventListener("pointerup", () => {
+      const wasHold = didHold;
+      stopHold();
+      if (!wasHold) {
+        if (applyStep(targetId, step) && navigator.vibrate && els.vibrateOn.checked) {
+          navigator.vibrate(8);
+        }
+      }
+    });
+    btn.addEventListener("pointercancel", stopHold);
+    btn.addEventListener("pointerleave", stopHold);
+    btn.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    btn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        applyStep(targetId, step);
+      }
+    });
+  }
+
+  document.querySelectorAll(".stepper__btn").forEach(bindStepperButton);
 
   document.querySelectorAll(".preset").forEach(btn => {
     btn.addEventListener("click", () => {

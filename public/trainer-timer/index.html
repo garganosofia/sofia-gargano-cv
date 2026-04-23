@@ -63,52 +63,82 @@
 
       <div class="field">
         <label for="workTime" data-i18n="field.work">Trabajo (serie)</label>
-        <div class="field__row">
-          <button type="button" class="step" data-step="-5" data-target="workTime" aria-label="Restar 5 segundos a trabajo">−</button>
-          <input id="workTime" type="number" inputmode="numeric" min="1" max="3600" step="1" value="40">
-          <span class="field__unit" data-i18n="unit.sec">seg</span>
-          <button type="button" class="step" data-step="5" data-target="workTime" aria-label="Sumar 5 segundos a trabajo">+</button>
+        <div class="stepper" data-stepper>
+          <button type="button" class="stepper__btn stepper__btn--minus" data-step="-5" data-target="workTime" aria-label="Restar 5 segundos a trabajo">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 11h14v2H5z"/></svg>
+          </button>
+          <div class="stepper__display">
+            <input id="workTime" class="stepper__input" type="number" inputmode="numeric" min="1" max="3600" step="1" value="40">
+            <span class="stepper__unit" data-i18n="unit.sec">seg</span>
+          </div>
+          <button type="button" class="stepper__btn stepper__btn--plus" data-step="5" data-target="workTime" aria-label="Sumar 5 segundos a trabajo">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>
+          </button>
         </div>
       </div>
 
       <div class="field">
         <label for="restTime" data-i18n="field.rest">Descanso</label>
-        <div class="field__row">
-          <button type="button" class="step" data-step="-5" data-target="restTime" aria-label="Restar 5 segundos al descanso">−</button>
-          <input id="restTime" type="number" inputmode="numeric" min="0" max="3600" step="1" value="20">
-          <span class="field__unit" data-i18n="unit.sec">seg</span>
-          <button type="button" class="step" data-step="5" data-target="restTime" aria-label="Sumar 5 segundos al descanso">+</button>
+        <div class="stepper" data-stepper>
+          <button type="button" class="stepper__btn stepper__btn--minus" data-step="-5" data-target="restTime" aria-label="Restar 5 segundos al descanso">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 11h14v2H5z"/></svg>
+          </button>
+          <div class="stepper__display">
+            <input id="restTime" class="stepper__input" type="number" inputmode="numeric" min="0" max="3600" step="1" value="20">
+            <span class="stepper__unit" data-i18n="unit.sec">seg</span>
+          </div>
+          <button type="button" class="stepper__btn stepper__btn--plus" data-step="5" data-target="restTime" aria-label="Sumar 5 segundos al descanso">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>
+          </button>
         </div>
       </div>
 
       <div class="field">
         <label for="alertTime" data-i18n="field.alert">Aviso (alarma antes de terminar)</label>
-        <div class="field__row">
-          <button type="button" class="step" data-step="-1" data-target="alertTime" aria-label="Restar 1 segundo al aviso">−</button>
-          <input id="alertTime" type="number" inputmode="numeric" min="0" max="60" step="1" value="5">
-          <span class="field__unit" data-i18n="unit.sec">seg</span>
-          <button type="button" class="step" data-step="1" data-target="alertTime" aria-label="Sumar 1 segundo al aviso">+</button>
+        <div class="stepper" data-stepper>
+          <button type="button" class="stepper__btn stepper__btn--minus" data-step="-1" data-target="alertTime" aria-label="Restar 1 segundo al aviso">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 11h14v2H5z"/></svg>
+          </button>
+          <div class="stepper__display">
+            <input id="alertTime" class="stepper__input" type="number" inputmode="numeric" min="0" max="60" step="1" value="5">
+            <span class="stepper__unit" data-i18n="unit.sec">seg</span>
+          </div>
+          <button type="button" class="stepper__btn stepper__btn--plus" data-step="1" data-target="alertTime" aria-label="Sumar 1 segundo al aviso">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>
+          </button>
         </div>
         <p class="field__help" data-i18n="field.alertHelp">0 = sin aviso. Suena un pitido medio y la voz dice "Aviso" antes de cambiar de fase.</p>
       </div>
 
       <div class="field">
         <label for="rounds" data-i18n="field.rounds">Series</label>
-        <div class="field__row">
-          <button type="button" class="step" data-step="-1" data-target="rounds" aria-label="Restar 1 serie">−</button>
-          <input id="rounds" type="number" inputmode="numeric" min="1" max="99" step="1" value="8">
-          <span class="field__unit">×</span>
-          <button type="button" class="step" data-step="1" data-target="rounds" aria-label="Sumar 1 serie">+</button>
+        <div class="stepper" data-stepper>
+          <button type="button" class="stepper__btn stepper__btn--minus" data-step="-1" data-target="rounds" aria-label="Restar 1 serie">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 11h14v2H5z"/></svg>
+          </button>
+          <div class="stepper__display">
+            <input id="rounds" class="stepper__input" type="number" inputmode="numeric" min="1" max="99" step="1" value="8">
+            <span class="stepper__unit">×</span>
+          </div>
+          <button type="button" class="stepper__btn stepper__btn--plus" data-step="1" data-target="rounds" aria-label="Sumar 1 serie">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>
+          </button>
         </div>
       </div>
 
       <div class="field">
         <label for="prepTime" data-i18n="field.prep">Preparación inicial</label>
-        <div class="field__row">
-          <button type="button" class="step" data-step="-5" data-target="prepTime" aria-label="Restar 5 segundos de preparación">−</button>
-          <input id="prepTime" type="number" inputmode="numeric" min="0" max="60" step="1" value="10">
-          <span class="field__unit" data-i18n="unit.sec">seg</span>
-          <button type="button" class="step" data-step="5" data-target="prepTime" aria-label="Sumar 5 segundos de preparación">+</button>
+        <div class="stepper" data-stepper>
+          <button type="button" class="stepper__btn stepper__btn--minus" data-step="-5" data-target="prepTime" aria-label="Restar 5 segundos de preparación">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 11h14v2H5z"/></svg>
+          </button>
+          <div class="stepper__display">
+            <input id="prepTime" class="stepper__input" type="number" inputmode="numeric" min="0" max="60" step="1" value="10">
+            <span class="stepper__unit" data-i18n="unit.sec">seg</span>
+          </div>
+          <button type="button" class="stepper__btn stepper__btn--plus" data-step="5" data-target="prepTime" aria-label="Sumar 5 segundos de preparación">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>
+          </button>
         </div>
         <p class="field__help" data-i18n="field.prepHelp">En los últimos 3 segundos, la voz dice "tres, dos, uno".</p>
       </div>
