@@ -126,6 +126,88 @@ body[data-phase="done"]  { --phase-color: var(--done); }
 .topbar__back:hover,
 .topbar__icon:hover { transform: translateY(-1px); }
 
+.topbar__tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-switch {
+  display: inline-flex;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+}
+
+.lang-switch__btn {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  font: 700 0.78rem var(--mono);
+  letter-spacing: 0.06em;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.lang-switch__btn.is-active {
+  background: var(--accent);
+  color: #001218;
+}
+
+.lang-switch__btn:hover:not(.is-active) {
+  color: var(--text);
+}
+
+.voice-picker {
+  margin-top: 22px;
+  display: grid;
+  gap: 8px;
+}
+
+.voice-picker label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.voice-picker__row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.voice-picker select {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: var(--bg-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: 600 0.95rem var(--sans);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%238b9cb8' d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 36px;
+}
+
+.voice-picker select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn--sm {
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
 .app {
   max-width: var(--max);
   margin: 0 auto;
