@@ -18,10 +18,34 @@
   <header class="hero">
     <div class="hero__inner">
       <nav class="langnav" aria-label="Idioma">
-        <ul class="langnav__list">
-          <li><a href="./" aria-current="page">ES</a></li>
-          <li><a href="en/" hreflang="en">EN</a></li>
-        </ul>
+        <div class="langnav__track">
+          <a class="langnav__opt" href="./" hreflang="es" aria-current="page" aria-label="Ver en español">
+            <span class="langnav__flag" aria-hidden="true">
+              <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                <rect width="24" height="18" fill="#AA151B" rx="1"/>
+                <rect y="4.5" width="24" height="9" fill="#F1BF00"/>
+              </svg>
+            </span>
+            <span class="langnav__code">ES</span>
+          </a>
+          <a class="langnav__opt" href="en/" hreflang="en" aria-label="Switch to English">
+            <span class="langnav__flag" aria-hidden="true">
+              <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                <rect width="24" height="18" fill="#B22234" rx="1"/>
+                <path fill="#fff" d="M0 2.08h24v1.38H0zm0 2.77h24v1.38H0zm0 2.76h24v1.38H0zm0 2.77h24v1.38H0zm0 2.76h24v1.38H0zm0 2.77h24v1.38H0z"/>
+                <rect width="9.6" height="9.66" fill="#3C3B6E"/>
+                <g fill="#fff">
+                  <circle cx="1.85" cy="1.85" r="0.42"/><circle cx="3.7" cy="1.85" r="0.42"/><circle cx="5.55" cy="1.85" r="0.42"/><circle cx="7.4" cy="1.85" r="0.42"/>
+                  <circle cx="2.78" cy="3.22" r="0.42"/><circle cx="4.63" cy="3.22" r="0.42"/><circle cx="6.48" cy="3.22" r="0.42"/>
+                  <circle cx="1.85" cy="4.58" r="0.42"/><circle cx="3.7" cy="4.58" r="0.42"/><circle cx="5.55" cy="4.58" r="0.42"/><circle cx="7.4" cy="4.58" r="0.42"/>
+                  <circle cx="2.78" cy="5.95" r="0.42"/><circle cx="4.63" cy="5.95" r="0.42"/><circle cx="6.48" cy="5.95" r="0.42"/>
+                  <circle cx="1.85" cy="7.32" r="0.42"/><circle cx="3.7" cy="7.32" r="0.42"/><circle cx="5.55" cy="7.32" r="0.42"/><circle cx="7.4" cy="7.32" r="0.42"/>
+                </g>
+              </svg>
+            </span>
+            <span class="langnav__code">EN</span>
+          </a>
+        </div>
       </nav>
       <p class="eyebrow">Educación física · Salud · Tecnología</p>
       <h1>Sofía Gárgano</h1>
