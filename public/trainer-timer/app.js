@@ -184,6 +184,8 @@
   };
 
   let audioCtx = null;
+  let audioUnlocked = false;
+  let silentLoop = null;
 
   function detectInitialLang() {
     try {
@@ -203,18 +205,64 @@
   }
 
   const ensureAudio = () => {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
     if (!audioCtx) {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (AC) audioCtx = new AC();
+      try { audioCtx = new AC(); } catch (_) { return null; }
     }
-    if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+    if (audioCtx.state === "suspended") {
+      audioCtx.resume().catch(() => { /* noop */ });
+    }
     return audioCtx;
   };
+
+  function unlockAudio() {
+    const ctx = ensureAudio();
+    if (!ctx) return;
+
+    try {
+      const buffer = ctx.createBuffer(1, 1, 22050);
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+      source.connect(ctx.destination);
+      source.start(0);
+    } catch (_) { /* noop */ }
+
+    if ("speechSynthesis" in window && !audioUnlocked) {
+      try {
+        const u = new SpeechSynthesisUtterance(" ");
+        u.volume = 0;
+        u.rate = 1;
+        window.speechSynthesis.speak(u);
+      } catch (_) { /* noop */ }
+    }
+
+    if (!silentLoop) {
+      try {
+        silentLoop = new Audio("data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/NCxKYAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxPEAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/zQsT/AAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+        silentLoop.loop = true;
+        silentLoop.preload = "auto";
+        silentLoop.setAttribute("playsinline", "");
+        silentLoop.muted = false;
+        silentLoop.volume = 0.001;
+        silentLoop.play().catch(() => { /* noop */ });
+      } catch (_) { /* noop */ }
+    }
+
+    audioUnlocked = true;
+  }
+
+  ["pointerdown", "touchstart", "mousedown", "keydown"].forEach((ev) => {
+    document.addEventListener(ev, unlockAudio, { capture: true, passive: true });
+  });
 
   const playBeep = ({ frequency, duration, type = "sine", volume = 0.6 }) => {
     if (!els.beepOn.checked) return;
     const ctx = ensureAudio();
     if (!ctx) return;
+    if (ctx.state === "suspended") {
+      ctx.resume().catch(() => { /* noop */ });
+    }
 
     const now = ctx.currentTime;
     const osc = ctx.createOscillator();
@@ -352,6 +400,7 @@
     if (!els.voiceOn.checked) return;
     if (!("speechSynthesis" in window)) return;
     try {
+      if (window.speechSynthesis.paused) window.speechSynthesis.resume();
       if (!opts.queue) window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(text);
       const voice = getActiveVoice();
@@ -637,7 +686,7 @@
   };
 
   const start = async () => {
-    ensureAudio();
+    unlockAudio();
     persistConfig();
 
     if (state.isRunning && !state.isPaused) {
@@ -767,7 +816,8 @@
   });
 
   els.testVoiceBtn.addEventListener("click", () => {
-    ensureAudio();
+    unlockAudio();
+    beepFor("work");
     speak(t("voice.test.sample"), { rate: 1 });
   });
 
