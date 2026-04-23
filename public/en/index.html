@@ -147,6 +147,14 @@
               <span class="app-hub__meta">hydration-daily →</span>
             </a>
           </li>
+          <li>
+            <a class="app-hub__link" href="../trainer-timer/">
+              <span class="app-hub__icon">04 · coach</span>
+              <span class="app-hub__title">Coach interval timer</span>
+              <span class="app-hub__desc">Configurable work, rest and pre-end alert. Distinct long beep per phase plus voice cues for every change.</span>
+              <span class="app-hub__meta">trainer-timer →</span>
+            </a>
+          </li>
         </ul>
       </div>
     </section>
@@ -255,7 +263,56 @@
     <p>2026 · GitHub Actions · GitHub Pages · static stack</p>
   </footer>
 
-  <div class="wa-dock" id="wa-dock">
+  <div class="apps-dock" id="apps-dock" data-dock data-dock-open-class="apps-dock--open">
+    <div class="apps-dock__panel" data-dock-panel role="dialog" aria-label="Web apps" hidden>
+      <button type="button" class="apps-dock__close" data-dock-close aria-label="Close apps panel">×</button>
+      <p class="apps-dock__kicker">// apps live</p>
+      <p class="apps-dock__title">Web tools</p>
+      <ul class="apps-dock__list">
+        <li>
+          <a class="apps-dock__item" href="https://garganosofia.github.io/wellness-check/" rel="noopener noreferrer" target="_blank">
+            <span class="apps-dock__num">01</span>
+            <span class="apps-dock__text">
+              <span class="apps-dock__name">Wellness self-check</span>
+              <span class="apps-dock__desc">quiz · indicative score</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="apps-dock__item" href="https://garganosofia.github.io/breath-yoga-timer/" rel="noopener noreferrer" target="_blank">
+            <span class="apps-dock__num">02</span>
+            <span class="apps-dock__text">
+              <span class="apps-dock__name">Breathing &amp; yoga</span>
+              <span class="apps-dock__desc">inhale · hold · exhale · empty</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="apps-dock__item" href="https://garganosofia.github.io/hydration-daily/" rel="noopener noreferrer" target="_blank">
+            <span class="apps-dock__num">03</span>
+            <span class="apps-dock__text">
+              <span class="apps-dock__name">Daily hydration</span>
+              <span class="apps-dock__desc">glasses + reminders</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="apps-dock__item" href="../trainer-timer/">
+            <span class="apps-dock__num">04</span>
+            <span class="apps-dock__text">
+              <span class="apps-dock__name">Coach interval timer</span>
+              <span class="apps-dock__desc">work · rest · voice cues</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <button type="button" class="apps-dock__fab" data-dock-fab aria-expanded="false" aria-controls="apps-dock" aria-label="Open quick access to apps">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
+    </button>
+  </div>
+
+  <div class="wa-dock" id="wa-dock" data-dock>
     <div class="wa-dock__panel" id="wa-panel" role="dialog" aria-label="Quick contact" hidden>
       <button type="button" class="wa-dock__close" aria-label="Close contact panel">×</button>
       <p class="wa-dock__kicker">Direct contact</p>

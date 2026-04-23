@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Cronómetro para entrenadores: series, descanso y aviso con pitido largo y voz que indica cada fase.">
+  <title>Cronómetro de entrenador · Series, descanso y aviso</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <meta name="theme-color" content="#06111c">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#contenido">Ir al contenido</a>
+
+  <header class="topbar">
+    <a class="topbar__back" href="../" aria-label="Volver al sitio principal">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      Inicio
+    </a>
+    <p class="topbar__title">Cronómetro de entrenador</p>
+    <button type="button" class="topbar__icon" id="fullscreenBtn" aria-label="Pantalla completa" title="Pantalla completa">
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 5h5V3H3v7h2zm9-2v2h5v5h2V3zM5 14H3v7h7v-2H5zm14 5h-5v2h7v-7h-2z"/></svg>
+    </button>
+  </header>
+
+  <main id="contenido" class="app">
+    <section class="timer" aria-live="polite">
+      <p class="timer__phase" id="phaseLabel">Listo</p>
+      <p class="timer__round" id="roundLabel">Serie 0 / 0</p>
+      <div class="timer__clock" id="clock">00:00</div>
+      <div class="timer__bar" aria-hidden="true">
+        <div class="timer__bar-fill" id="barFill"></div>
+      </div>
+      <p class="timer__hint" id="hintLabel">Configurá los tiempos y tocá Iniciar.</p>
+    </section>
+
+    <section class="controls" aria-label="Controles">
+      <button type="button" class="btn btn--primary" id="startBtn" aria-label="Iniciar entrenamiento">
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+        </span>
+        <span class="btn__text" id="startBtnText">Iniciar</span>
+      </button>
+      <button type="button" class="btn btn--ghost" id="resetBtn" aria-label="Reiniciar">
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+        </span>
+        <span class="btn__text">Reiniciar</span>
+      </button>
+    </section>
+
+    <section class="settings" aria-label="Configuración del entrenamiento">
+      <h2 class="settings__title">Configuración</h2>
+
+      <div class="field">
+        <label for="workTime">Trabajo (serie)</label>
+        <div class="field__row">
+          <button type="button" class="step" data-step="-5" data-target="workTime" aria-label="Restar 5 segundos a trabajo">−</button>
+          <input id="workTime" type="number" inputmode="numeric" min="1" max="3600" step="1" value="40">
+          <span class="field__unit">seg</span>
+          <button type="button" class="step" data-step="5" data-target="workTime" aria-label="Sumar 5 segundos a trabajo">+</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="restTime">Descanso</label>
+        <div class="field__row">
+          <button type="button" class="step" data-step="-5" data-target="restTime" aria-label="Restar 5 segundos al descanso">−</button>
+          <input id="restTime" type="number" inputmode="numeric" min="0" max="3600" step="1" value="20">
+          <span class="field__unit">seg</span>
+          <button type="button" class="step" data-step="5" data-target="restTime" aria-label="Sumar 5 segundos al descanso">+</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="alertTime">Aviso (alarma antes de terminar)</label>
+        <div class="field__row">
+          <button type="button" class="step" data-step="-1" data-target="alertTime" aria-label="Restar 1 segundo al aviso">−</button>
+          <input id="alertTime" type="number" inputmode="numeric" min="0" max="60" step="1" value="5">
+          <span class="field__unit">seg</span>
+          <button type="button" class="step" data-step="1" data-target="alertTime" aria-label="Sumar 1 segundo al aviso">+</button>
+        </div>
+        <p class="field__help">0 = sin aviso. Suena un pitido medio y la voz dice "Aviso" antes de cambiar de fase.</p>
+      </div>
+
+      <div class="field">
+        <label for="rounds">Series</label>
+        <div class="field__row">
+          <button type="button" class="step" data-step="-1" data-target="rounds" aria-label="Restar 1 serie">−</button>
+          <input id="rounds" type="number" inputmode="numeric" min="1" max="99" step="1" value="8">
+          <span class="field__unit">×</span>
+          <button type="button" class="step" data-step="1" data-target="rounds" aria-label="Sumar 1 serie">+</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="prepTime">Preparación inicial</label>
+        <div class="field__row">
+          <button type="button" class="step" data-step="-5" data-target="prepTime" aria-label="Restar 5 segundos de preparación">−</button>
+          <input id="prepTime" type="number" inputmode="numeric" min="0" max="60" step="1" value="10">
+          <span class="field__unit">seg</span>
+          <button type="button" class="step" data-step="5" data-target="prepTime" aria-label="Sumar 5 segundos de preparación">+</button>
+        </div>
+      </div>
+
+      <h3 class="settings__subtitle">Avisos</h3>
+      <div class="toggles">
+        <label class="toggle">
+          <input type="checkbox" id="voiceOn" checked>
+          <span class="toggle__track" aria-hidden="true"></span>
+          <span class="toggle__label">Voz</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="beepOn" checked>
+          <span class="toggle__track" aria-hidden="true"></span>
+          <span class="toggle__label">Pitido</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="vibrateOn" checked>
+          <span class="toggle__track" aria-hidden="true"></span>
+          <span class="toggle__label">Vibrar</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="wakeOn" checked>
+          <span class="toggle__track" aria-hidden="true"></span>
+          <span class="toggle__label">Pantalla activa</span>
+        </label>
+      </div>
+
+      <div class="presets">
+        <p class="presets__title">Presets rápidos</p>
+        <div class="presets__row">
+          <button type="button" class="preset" data-work="20" data-rest="10" data-rounds="8">Tabata 20/10 ×8</button>
+          <button type="button" class="preset" data-work="40" data-rest="20" data-rounds="10">HIIT 40/20 ×10</button>
+          <button type="button" class="preset" data-work="60" data-rest="30" data-rounds="6">Fuerza 60/30 ×6</button>
+          <button type="button" class="preset" data-work="30" data-rest="30" data-rounds="12">EMOM 30/30 ×12</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Cronómetro 100% en el navegador · sin registro · Sofía Gárgano</p>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
