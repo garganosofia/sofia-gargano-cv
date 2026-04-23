@@ -2,3 +2,5 @@
 *.swp
 .env
 .env.*
+*.docx
+*.pdf
